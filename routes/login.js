@@ -9,6 +9,8 @@ router.get('/',weappSession, function(req, res, next) {
    var wxSession=req.wxSession
    var {openid,session_key,expires_in}=wxSession
    var expires=(new Date()).getTime()+expires_in*1000
+
+
    var addData={
    	    openid: openid,
 	    session_key:{
@@ -20,6 +22,7 @@ router.get('/',weappSession, function(req, res, next) {
    var newUser=new User(addData)
 
    newUser.save((err)=>{
+   		console.log(newUser,"用户");
    		if(err){
    			console.log(err);
    			return res.json({
@@ -32,7 +35,7 @@ router.get('/',weappSession, function(req, res, next) {
 	   	var session=genSession({_id})
 	   	res.json({
 	   	 	code:1,
-	   	 	session:session
+	   	 	data:session
 	   	})
    })
 });
