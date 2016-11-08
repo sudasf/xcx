@@ -28,10 +28,18 @@ router.post('/update',checkSession, function(req, res, next) {
    				errMsg:"数据库存储出错"
    			})
    		}
+
    	    res.json({
 	   	 	code:1,
 	    })	
    })
 });
+
+router.post('/add',function(req,res,next){
+	console.log(req.body,"我的body");
+	res.json({
+		data:req.body
+	})
+})
 
 module.exports = router;
