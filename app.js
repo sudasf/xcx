@@ -82,7 +82,7 @@ http.listen(3008, function(){
 // });
 
 var WebSocket = require('ws');
-var ws = new WebSocket('wss://www.91jiayun.com/socket');
+var ws = new WebSocket('ws://www.91jiayun.com/socket');
 
 ws.on('open', function open() {
   ws.send('something');
