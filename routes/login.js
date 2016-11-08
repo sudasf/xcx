@@ -21,7 +21,10 @@ router.get('/',weappSession, function(req, res, next) {
 
    		if(doc){
    			console.log(doc,"已有用户");
-   			doc.session_key=session_key
+   			doc.session_key={
+   				value:session_key,
+   				expires:expires,
+   			}
    			doc.save((err)=>{
    				let _id=doc._id
 			   	let session=genSession({_id})
@@ -35,7 +38,7 @@ router.get('/',weappSession, function(req, res, next) {
 			   	    openid: openid,
 				    session_key:{
 						value:session_key,
-						expires_in:expires,
+						expires:expires,
 					}
 			   }
 			   var newUser=new User(addData)
