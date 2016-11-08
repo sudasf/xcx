@@ -61,13 +61,25 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var io = require('socket.io')(http,"3008");
+var io = require('socket.io')(http);
 
 http.listen(3008, function(){
   console.log('listening on *:3008');
 });
 
-dati(io);
+io.on('connection', function(socket){
+
+  console.log('a user connected');
+
+  socket.on('hi', function(msg){
+    console.log('message: ' + msg);
+  });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+});
 
 
 //module.exports = app;
