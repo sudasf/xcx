@@ -61,7 +61,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var io = require('socket.io')(http,{path:socket});
+var io = require('socket.io')(http,{path:"socket"});
 
 http.listen(3008, function(){
   console.log('listening on *:3008');
