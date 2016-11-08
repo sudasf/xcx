@@ -61,10 +61,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var io = require('socket.io')(http);
+var io = require('socket.io')(http,"3008");
 
 http.listen(3008, function(){
-  console.log('listening on *:3005');
+  console.log('listening on *:3008');
 });
 
 dati(io);
