@@ -12,7 +12,7 @@ var login = require('./routes/login');
 var dati=require('./lib/dati')
 
 var app = express();
-var http = require('http').Server(app);
+var http = require('http').createServer(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -61,40 +61,40 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//var io = require('socket.io')(http,{path:"socket"});
+var io = require('socket.io')(http,{path:"socket"});
 
 http.listen(3008, function(){
   console.log('listening on *:3008');
 });
 
-// io.on('connection', function(socket){
+io.on('connection', function(socket){
 
-//   console.log('a user connected');
+  console.log('a user connected');
 
-//   socket.on('hi', function(msg){
-//     console.log('message: ' + msg);
-//   });
-
-//   socket.on('disconnect', function(){
-//     console.log('user disconnected');
-//   });
-
-// });
-
-var WebSocketServer = require('ws').Server
-var wss = new WebSocketServer({ server: http  })
-
-wss.on('connection', function connection(ws) {
-  var location = url.parse(ws.upgradeReq.url, true);
-  // you might use location.query.access_token to authenticate or share sessions
-  // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
-  console.log('连上了');
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+  socket.on('hi', function(msg){
+    console.log('message: ' + msg);
   });
 
-  ws.send('something');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
 });
+
+// var WebSocketServer = require('ws').Server
+// var wss = new WebSocketServer({ server: http  })
+
+// wss.on('connection', function connection(ws) {
+//   var location = url.parse(ws.upgradeReq.url, true);
+//   // you might use location.query.access_token to authenticate or share sessions
+//   // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
+//   console.log('连上了');
+//   ws.on('message', function incoming(message) {
+//     console.log('received: %s', message);
+//   });
+
+//   ws.send('something');
+// });
 
 
 //module.exports = app;
