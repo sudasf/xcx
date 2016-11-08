@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {User}=require('../lib/db')
-var {genSession}=require('../lib/mySession')
+var {checkSession}=require('../lib/mySession')
 
 /* GET users listing. */
 router.get('/update',checkSession, function(req, res, next) {
