@@ -6,7 +6,7 @@ var {checkSession}=require('../lib/mySession')
 /* GET users listing. */
 router.post('/update',checkSession, function(req, res, next) {
 
-    console.log(req,"我的body");
+    console.log(req.body,"我的body");
 
    var {nickName,avatarUrl,gender,province,city,country}=req.body
    var updateData={
