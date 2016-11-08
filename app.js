@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 
 var app = express();
+var http = require('http').Server(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,5 +59,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var io = require('socket.io')(http);
 
-module.exports = app;
+http.listen(3005, function(){
+  console.log('listening on *:3005');
+});
+
+dati(io);
+
+
+//module.exports = app;
