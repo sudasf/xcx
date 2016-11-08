@@ -10,34 +10,55 @@ router.get('/',weappSession, function(req, res, next) {
    var {openid,session_key,expires_in}=wxSession
    var expires=(new Date()).getTime()+expires_in*1000
 
-
-   var addData={
-   	    openid: openid,
-	    session_key:{
-			value:session_key,
-			expires_in:expires,
-		}
-   }
-
-   var newUser=new User(addData)
-
-   newUser.save((err)=>{
-   		console.log(newUser,"用户");
+   User.findOne({openid:openid},(err,doc)=>{
    		if(err){
    			console.log(err);
    			return res.json({
-   				code:-3,
-   				errMsg:"数据库存储出错"
+   				code:-4,
+   				errMsg:"数据库查询出错"
    			})
    		}
 
-	   	var _id=newUser._id
-	   	var session=genSession({_id})
-	   	res.json({
-	   	 	code:1,
-	   	 	data:session
-	   	})
+   		if(doc){
+   			console.log(doc,"已有用户");
+   			doc.session_key=session_key
+   			doc.save((err)=>{
+   				let _id=doc._id
+			   	let session=genSession({_id})
+			   	res.json({
+			   	 	code:1,
+			   	 	data:session
+			   	})
+   			})
+   		}else{
+   			  var addData={
+			   	    openid: openid,
+				    session_key:{
+						value:session_key,
+						expires_in:expires,
+					}
+			   }
+			   var newUser=new User(addData)
+			        newUser.save((err)=>{
+			   		console.log(newUser,"新增用户");
+			   		if(err){
+			   			console.log(err);
+			   			return res.json({
+			   				code:-3,
+			   				errMsg:"数据库存储出错"
+			   			})
+			   		}
+
+				   	let _id=newUser._id
+				   	let session=genSession({_id})
+				   	res.json({
+				   	 	code:1,
+				   	 	data:session
+				   	})
+			   })
+   		}
    })
+
 });
 
 
