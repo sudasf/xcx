@@ -81,17 +81,19 @@ http.listen(3008, function(){
 
 // });
 
-var WebSocket = require('ws');
-var ws = new WebSocket('ws://www.91jiayun.com/socket');
+var WebSocketServer = require('ws').Server
+var wss = new WebSocketServer({ server: http  })
 
-ws.on('open', function open() {
+wss.on('connection', function connection(ws) {
+  var location = url.parse(ws.upgradeReq.url, true);
+  // you might use location.query.access_token to authenticate or share sessions
+  // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
+  console.log('连上了');
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+  });
+
   ws.send('something');
-});
-
-ws.on('message', function(data, flags) {
-  // flags.binary will be set if a binary data is received.
-  // flags.masked will be set if the data was masked.
-  console.log(data);
 });
 
 
