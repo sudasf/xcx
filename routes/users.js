@@ -5,13 +5,14 @@ var {checkSession}=require('../lib/mySession')
 
 /* GET users listing. */
 router.post('/update',checkSession, function(req, res, next) {
-   var {userInfo,nickName,avatarUrl,gender,province,city,country}=req.body
+   var {nickName,avatarUrl,gender,province,city,country}=req.body
    var updateData={
-   	 userInfo,nickName,avatarUrl,gender,province,city,country
+   	 nickName,avatarUrl,gender,province,city,country
    }
    var myUser=req.myUser
-   console.log(myUser);
+   console.log(req.body,"lala");
    myUser.userInfo=updateData
+   console.log(myUser,"haha");
    myUser.save((err)=>{
    	    if(err){
    			console.log(err);
