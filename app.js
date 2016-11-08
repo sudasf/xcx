@@ -61,24 +61,37 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var io = require('socket.io')(http,{path:"socket"});
+//var io = require('socket.io')(http,{path:"socket"});
 
 http.listen(3008, function(){
   console.log('listening on *:3008');
 });
 
-io.on('connection', function(socket){
+// io.on('connection', function(socket){
 
-  console.log('a user connected');
+//   console.log('a user connected');
 
-  socket.on('hi', function(msg){
-    console.log('message: ' + msg);
-  });
+//   socket.on('hi', function(msg){
+//     console.log('message: ' + msg);
+//   });
 
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+//   socket.on('disconnect', function(){
+//     console.log('user disconnected');
+//   });
 
+// });
+
+var WebSocket = require('ws');
+var ws = new WebSocket('wss://www.91jiayun.com/socket');
+
+ws.on('open', function open() {
+  ws.send('something');
+});
+
+ws.on('message', function(data, flags) {
+  // flags.binary will be set if a binary data is received.
+  // flags.masked will be set if the data was masked.
+  console.log(data);
 });
 
 
